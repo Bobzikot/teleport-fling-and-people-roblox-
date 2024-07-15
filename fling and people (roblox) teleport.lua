@@ -12,6 +12,7 @@ local function TeleportToPlayers()
     local visitedPlayers = {}
     local hasTeleported = false
     local previousCFrame = localCharacter.HumanoidRootPart.CFrame
+    local originalCFrame = localCharacter.HumanoidRootPart.CFrame
 
     while true do
         if hasTeleported then
@@ -22,7 +23,7 @@ local function TeleportToPlayers()
                 if player.Character then
                     previousCFrame = localCharacter.HumanoidRootPart.CFrame
                     localCharacter.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
-                    wait(0.001) -- extremely fast teleportation
+                    wait(0.001) 
                     localCharacter.HumanoidRootPart.CFrame = previousCFrame
                     visitedPlayers[player] = true
                 end
@@ -32,6 +33,8 @@ local function TeleportToPlayers()
             hasTeleported = true
         end
     end
+
+    localCharacter.HumanoidRootPart.CFrame = originalCFrame
 end
 
 Section:NewKeybind("Teleport to Players", "Teleport to all players", Enum.KeyCode.Z, TeleportToPlayers)
