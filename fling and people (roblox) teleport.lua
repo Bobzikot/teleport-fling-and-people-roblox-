@@ -13,7 +13,7 @@ local originalCFrame = localCharacter.HumanoidRootPart.CFrame
         if hasTeleported then
             break
         end
-    for _, player in pairs(players) do
+for _, player in pairs(players) do
   if player ~= game.Players.LocalPlayer and not visitedPlayers[player] then
 if player.Character then
 previousCFrame = localCharacter.HumanoidRootPart.CFrame
@@ -25,7 +25,7 @@ visitedPlayers[player] = true
     end                  
 end
     if table.Count(visitedPlayers) == #players - 1 then
-            hasTeleported = true
+hasTeleported = true
     end
 end
 localCharacter.HumanoidRootPart.CFrame = originalCFrame
