@@ -2,7 +2,9 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Roboj
 local Window = Library.CreateLib("Teleporting", "RJTheme1")
 local Tab = Window:NewTab("Teleport")
 local Section = Tab:NewSection("Teleport")
+local toggle = true
 local function TeleportToPlayers()
+    if toggle then
 local players = game:GetService("Players"):GetPlayers()
 local localCharacter = game.Players.LocalPlayer.Character
 local visitedPlayers = {}
@@ -10,24 +12,30 @@ local hasTeleported = false
 local previousCFrame = localCharacter.HumanoidRootPart.CFrame
 local originalCFrame = localCharacter.HumanoidRootPart.CFrame
    while true do
-        if hasTeleported then
-            break
-        end
-for _, player in pairs(players) do
-  if player ~= game.Players.LocalPlayer and not visitedPlayers[player] then
-if player.Character then
+         if hasTeleported then
+         break
+      end
+ for _, player in pairs(players) do
+         if player ~= game.Players.LocalPlayer and not visitedPlayers[player] then
+            if player.Character then
 previousCFrame = localCharacter.HumanoidRootPart.CFrame
 localCharacter.HumanoidRootPart.CFrame = player.Character.HumanoidRootPart.CFrame
 wait(0.001) 
 localCharacter.HumanoidRootPart.CFrame = previousCFrame
 visitedPlayers[player] = true
-        end
-    end                  
-end
-    if table.Count(visitedPlayers) == #players - 1 then
+      end
+         end                  
+             end
+   if table.Count(visitedPlayers) == #players - 1 then
 hasTeleported = true
+            end
+        end
+localCharacter.HumanoidRootPart.CFrame = originalCFrame
     end
 end
-localCharacter.HumanoidRootPart.CFrame = originalCFrame
-end
-Section:NewKeybind("Teleport to Players", "Teleport to all players", Enum.KeyCode.Z, TeleportToPlayers)
+local keybind = Section:NewKeybind("Teleport to Players", "Teleport to all players", Enum.KeyCode.Z, TeleportToPlayers, true)
+local toggleButton = Section:NewToggle("Toggle Teleport", "Toggle teleportation", function(state)
+toggle = state
+keybind:SetState(state)
+end)
+toggleButton:SetValue(true)
